@@ -10,155 +10,172 @@ import {
   Alert,
   ScrollView
 } from 'react-native';
+import SystemSetting from 'react-native-system-setting'
 
 export default class Buy extends Component {
-
-  constructor(props) {
+   constructor(props) {
     super(props);
     this.state = {
-      modalVisible:false,
-      userSelected:[],
+      modalVisible: false,
+      userSelected: [],
       product: {
-        name:"model 33",
-        description:"جامد زوحليقه",
-        created:"",
-        images:[
-          "https://bootdey.com/img/Content/avatar/avatar6.png", 
-          "https://bootdey.com/img/Content/avatar/avatar2.png", 
-          "https://bootdey.com/img/Content/avatar/avatar3.png", 
-        ] 
+        name: "model 33",
+        description: "جامد زوحليقه",
+        created: "",
+        images: [
+          "https://bootdey.com/img/Content/avatar/avatar6.png",
+          "https://bootdey.com/img/Content/avatar/avatar2.png",
+          "https://bootdey.com/img/Content/avatar/avatar3.png",
+        ]
       }
     };
   }
+//get the current volume
+// SystemSetting.getVolume().then((volume) => {
+//   console.log('Current volume is ' + volume);
+// });
 
-  __setImageSelected = (image) => {
-    this.setState({selectedImage:image});
-  }
+// change the volume
+// SystemSetting.setVolume(0.5);
 
-  __renderImages = () => {
-    return(
-      <View style={styles.smallImagesContainer}>
-        {this.state.product.images.map((prop, key) => {
-          return (
-            <TouchableOpacity key={key} onPress={() => {this.__setImageSelected(prop)}}>
-              <Image style={styles.smallImage} source={{uri:prop}}/>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    )
-  }
- 
+// listen the volume changing if you need
+ volumeListener = SystemSetting.addVolumeListener((data) => {
+  const volume = data.value;
+  console.log(volume);
+});
 
-  render() {
-    var mainImage = (this.state.selectedImage) ? this.state.selectedImage: this.state.product.images[0]; 
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.content}>
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.name}>{this.state.product.name}</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <View style={styles.header}>
-                <View style={styles.mainImageContainer}>
-                  <Image style={styles.mainImage} source={{uri:mainImage}}/>
-                </View>
-                {this.__renderImages()}
+clickEventListener = () => {
+  console.log("fdfdfd");
+}
+
+__setImageSelected = (image) => {
+  this.setState({ selectedImage: image });
+}
+
+__renderImages = () => {
+  return (
+    <View style={styles.smallImagesContainer}>
+      {this.state.product.images.map((prop, key) => {
+        return (
+          <TouchableOpacity key={key} onPress={() => { this.__setImageSelected(prop) }}>
+            <Image style={styles.smallImage} source={{ uri: prop }} />
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  )
+}
+
+
+render() {
+  var mainImage = (this.state.selectedImage) ? this.state.selectedImage : this.state.product.images[0];
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.content}>
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.name}>{this.state.product.name}</Text>
+          </View>
+          <View style={styles.cardContent}>
+            <View style={styles.header}>
+              <View style={styles.mainImageContainer}>
+                <Image style={styles.mainImage} source={{ uri: mainImage }} />
               </View>
+              {this.__renderImages()}
             </View>
           </View>
- 
+        </View>
 
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Description</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.description}>{this.state.product.description}</Text>
-            </View>
-          </View>
 
-          <View style={styles.card}>
-            <View style={styles.cardContent}>
-              <TouchableOpacity style={styles.shareButton} onPress={()=> this.clickEventListener()}>
-                <Text style={styles.shareButtonText}>Add To Cart</Text>  
-              </TouchableOpacity>
-            </View>
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>Description</Text>
           </View>
-        </ScrollView>
-      </View>
-    );
-  }
+          <View style={styles.cardContent}>
+            <Text style={styles.description}>{this.state.product.description}</Text>
+          </View>
+        </View>
+
+        <View style={styles.card}>
+          <View style={styles.cardContent}>
+            <TouchableOpacity style={styles.shareButton} onPress={() => this.clickEventListener()}>
+              <Text style={styles.shareButtonText}>Add To Cart</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    marginTop:20,
-    backgroundColor:"#ebf0f7",
+  container: {
+    flex: 1,
+    marginTop: 20,
+    backgroundColor: "#ebf0f7",
   },
-  content:{
-    marginLeft:10,
-    marginRight:10,
-    marginTop:20,
+  content: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
   },
-  header:{
-    flexDirection:'row',
+  header: {
+    flexDirection: 'row',
   },
-  mainImage:{
-    width:200,
-    height:200,
+  mainImage: {
+    width: 200,
+    height: 200,
   },
-  smallImagesContainer:{
-    flexDirection:'column',
-    marginLeft:30
+  smallImagesContainer: {
+    flexDirection: 'column',
+    marginLeft: 30
   },
-  smallImage:{
-    width:60,
-    height:60,
-    marginTop:5, 
+  smallImage: {
+    width: 60,
+    height: 60,
+    marginTop: 5,
   },
   btnColor: {
-    height:40,
-    width:40,
-    borderRadius:40,
-    marginHorizontal:3
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    marginHorizontal: 3
   },
-  contentColors:{
-    flexDirection:'row', 
+  contentColors: {
+    flexDirection: 'row',
   },
-  name:{
-    fontSize:22,
-    color:"#696969",
-    fontWeight:'bold',
+  name: {
+    fontSize: 22,
+    color: "#696969",
+    fontWeight: 'bold',
   },
-  price:{
-    marginTop:10,
-    fontSize:18,
-    color:"green",
-    fontWeight:'bold'
+  price: {
+    marginTop: 10,
+    fontSize: 18,
+    color: "green",
+    fontWeight: 'bold'
   },
-  description:{
-    fontSize:18,
-    color:"#696969",
+  description: {
+    fontSize: 18,
+    color: "#696969",
   },
   shareButton: {
-    marginTop:10,
-    height:45,
+    marginTop: 10,
+    height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius:30,
+    borderRadius: 30,
     backgroundColor: "#00BFFF",
   },
-  shareButtonText:{
+  shareButtonText: {
     color: "#FFFFFF",
-    fontSize:20,
+    fontSize: 20,
   },
 
   /******** card **************/
-  card:{
+  card: {
     shadowColor: '#00000021',
     shadowOffset: {
       width: 0,
@@ -169,14 +186,14 @@ const styles = StyleSheet.create({
     elevation: 12,
 
     marginVertical: 5,
-    backgroundColor:"white",
+    backgroundColor: "white",
     marginHorizontal: 5,
   },
   cardContent: {
     paddingVertical: 12.5,
     paddingHorizontal: 16,
   },
-  cardHeader:{
+  cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 12.5,
@@ -185,8 +202,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
   },
-  cardTitle:{
-    color:"#00BFFF"
+  cardTitle: {
+    color: "#00BFFF"
   }
-}); 
-                
+});

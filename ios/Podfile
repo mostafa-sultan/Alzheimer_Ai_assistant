@@ -19,6 +19,10 @@ target 'Alzheimer_Ai_assistant' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'react-native-music-control', :path => '../node_modules/react-native-music-control'
+
+  pod 'RCTSystemSetting', :path => '../node_modules/react-native-system-setting'
+
   target 'Alzheimer_Ai_assistantTests' do
     inherit! :complete
     # Pods for testing
