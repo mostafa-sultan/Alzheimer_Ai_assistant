@@ -10,21 +10,21 @@ function VoiceTest() {
     const [results, setResults] = useState([]);
     const [partialResults, setPartialResults] = useState([]);
     useEffect(() => {
-        Voice.onSpeechStart = onSpeechStart;
+        // Voice.onSpeechStart = onSpeechStart;
         Voice.onSpeechRecognized = onSpeechRecognized;
         Voice.onSpeechEnd = onSpeechEnd;
         Voice.onSpeechError = onSpeechError;
         Voice.onSpeechResults = onSpeechResults;
-        Voice.onSpeechPartialResults = onSpeechPartialResults;
-        Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
+        // Voice.onSpeechPartialResults = onSpeechPartialResults;
+        // Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
         return () => {
             Voice.destroy().then(Voice.removeAllListeners);
         };
     }, []);
-    const onSpeechStart = (e) => {
-        console.log('onSpeechStart: ', e);
-        setStarted('√');
-    };
+    // const onSpeechStart = (e) => {
+    //     console.log('onSpeechStart: ', e);
+    //     setStarted('√');
+    // };
     const onSpeechRecognized = (e) => {
         console.log('onSpeechRecognized: ', e);
         setRecognized('√');
@@ -41,14 +41,14 @@ function VoiceTest() {
         console.log('onSpeechResults: ', e);
         setResults(e.value);
     };
-    const onSpeechPartialResults = (e) => {
-        console.log('onSpeechPartialResults: ', e);
-        setPartialResults(e.value);
-    };
-    const onSpeechVolumeChanged = (e) => {
-        console.log('onSpeechVolumeChanged: ', e);
-        setVolume(e.value);
-    };
+    // const onSpeechPartialResults = (e) => {
+    //     console.log('onSpeechPartialResults: ', e);
+    //     setPartialResults(e.value);
+    // };
+    // const onSpeechVolumeChanged = (e) => {
+    //     console.log('onSpeechVolumeChanged: ', e);
+    //     setVolume(e.value);
+    // };
     const _startRecognizing = async () => {
       console.log(Voice);
         _clearState();

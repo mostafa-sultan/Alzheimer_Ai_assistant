@@ -11,6 +11,7 @@ import {
   ScrollView
 } from 'react-native';
 import SystemSetting from 'react-native-system-setting'
+import Tts from 'react-native-tts';
 
 export default class Buy extends Component {
    constructor(props) {
@@ -46,6 +47,16 @@ export default class Buy extends Component {
 });
 
 clickEventListener = () => {
+  // Android
+  // Tts.speak('Hello, world!');
+
+Tts.speak('Hello, world!', {
+  androidParams: {
+    KEY_PARAM_PAN: -1,
+    KEY_PARAM_VOLUME: 1,
+    KEY_PARAM_STREAM: 'STREAM_MUSIC',
+  },
+});
   console.log("fdfdfd");
 }
 
