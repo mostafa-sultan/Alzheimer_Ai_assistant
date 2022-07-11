@@ -32,6 +32,7 @@ import Login2 from './src/screens/login/Login2';
 import Regsiter from './src/screens/login/Register';
 import Verify from './src/screens/login/Verify';
 import Emptyhome from './src/screens/test/emptyHome/EmptyHome';
+import VoiceTest from './src/screens/buyDevice/VoiceTest';
 // import Ex from './src/screens/test/customDrwer/Ex';
 // import Home from './src/screens/test/home/Home';
 
@@ -85,7 +86,8 @@ const App = () => {
     // <Register/>
    //<Home />
     // <Adddevice/>
-     <Buy />
+    //  <Buy />
+     <VoiceTest/>
     // <Detail/>
      // <Mapview/>
     // <Posts/>

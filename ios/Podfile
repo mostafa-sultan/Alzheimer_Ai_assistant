@@ -25,6 +25,8 @@ target 'Alzheimer_Ai_assistant' do
 
   pod 'TextToSpeech', :path => '../node_modules/react-native-tts'
 
+  pod 'react-native-voice', :path => '../node_modules/@react-native-voice/voice'
+
   target 'Alzheimer_Ai_assistantTests' do
     inherit! :complete
     # Pods for testing
