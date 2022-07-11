@@ -23,6 +23,8 @@ target 'Alzheimer_Ai_assistant' do
 
   pod 'RCTSystemSetting', :path => '../node_modules/react-native-system-setting'
 
+  pod 'TextToSpeech', :path => '../node_modules/react-native-tts'
+
   target 'Alzheimer_Ai_assistantTests' do
     inherit! :complete
     # Pods for testing

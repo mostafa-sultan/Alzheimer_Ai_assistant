@@ -41,6 +41,7 @@ export default class Buy extends Component {
 // listen the volume changing if you need
  volumeListener = SystemSetting.addVolumeListener((data) => {
   const volume = data.value;
+  console.log(data);
   console.log(volume);
 });
 
