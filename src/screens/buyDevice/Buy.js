@@ -40,11 +40,11 @@ export default class Buy extends Component {
 // SystemSetting.setVolume(0.5);
 
 // listen the volume changing if you need
- volumeListener = SystemSetting.addVolumeListener((data) => {
-  const volume = data.value;
-  console.log(data);
-  console.log(volume);
-});
+//  volumeListener = SystemSetting.addVolumeListener((data) => {
+//   const volume = data.value;
+//   console.log(data);
+//   console.log(volume);
+// });
 
 clickEventListener = () => {
   // Android

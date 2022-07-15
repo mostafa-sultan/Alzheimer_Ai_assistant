@@ -3,14 +3,33 @@ import { View, StyleSheet, ScrollView, Touchable, SafeAreaView, Button, TextInpu
 import axios from 'axios';
 import Tts from 'react-native-tts';
 
+import personData from './personData.json';
+
 
 import Voice from '@react-native-voice/voice';
+
+
+
+import SystemSetting from 'react-native-system-setting'
 
 const Functionality = () => {
 
     const [recognized, setRecognized] = useState('');
     const [results, setResults] = useState([]);
     useEffect(() => {
+        // text to speach
+        // Tts.voices().then(voices => console.log(voices));
+        Tts.setDefaultLanguage('ar');
+        // Tts.setDefaultVoice('ar-xa-x-are-local');
+        // Tts.setDefaultVoice('ar-xa-x-arc-network');
+        // Tts.setDefaultVoice('ar-xa-x-ard-network');
+        // Tts.setDefaultVoice('ar-xa-x-arz-local');
+        Tts.setDefaultVoice('ar-language');
+        // Tts.setDefaultVoice('ar-xa-x-are-network');
+        Tts.setDefaultRate(0.5);
+        Tts.setDefaultPitch(0.7);
+
+        // speach to text
         Voice.onSpeechResults = onSpeechResults;
         return () => {
             Voice.destroy().then(Voice.removeAllListeners);
@@ -24,22 +43,44 @@ const Functionality = () => {
         checkResult()
     }, [results]);
 
+
     const recognisionCamera = () => {
         console.log("hii");
 
-        axios.get('http://192.168.1.2:3001')
+        axios.get('http://192.168.1.4:3001')
             .then(function (response) {
                 // speek 
-                Tts.speak(response?.data[0]?._label, {
-                    androidParams: {
-                        KEY_PARAM_PAN: 1,
-                        KEY_PARAM_VOLUME: 1,
-                        KEY_PARAM_STREAM: 'STREAM_MUSIC',
-                    },
-                });
+                // // Tts.voices().then(voices => console.log(voices));
+                // Tts.setDefaultLanguage('ar');
+                // // Tts.setDefaultVoice('ar-xa-x-are-local');
+                // // Tts.setDefaultVoice('ar-xa-x-arc-network');
+                // // Tts.setDefaultVoice('ar-xa-x-ard-network');
+                // // Tts.setDefaultVoice('ar-xa-x-arz-local');
+                // Tts.setDefaultVoice('ar-language');
+                // // Tts.setDefaultVoice('ar-xa-x-are-network');
+                // Tts.setDefaultRate(0.5);
+                // Tts.setDefaultPitch(0.7);
+
+                // Tts.speak(response?.data[0]?._label
+                if (personData[response?.data[0]?._label]) {
+                    Tts.speak(personData[response?.data[0]?._label]);
+                } else {
+                    Tts.speak(response?.data[0]?._label);
+                }
+                //     Tts.speak(" من فضلك ادخل ما تريد mostafa تسجيله والمعادالمحدد"
+                //     // ,{ iosVoiceId: 'com.apple.ttsbundle.Moira-compact',
+                // //  
+                // //     androidParams: {
+                // //         KEY_PARAM_PAN: 1,
+                // //         KEY_PARAM_VOLUME: 1,
+                // //         KEY_PARAM_STREAM: 'STREAM_MUSIC',
+                // //     },
+                // // }
+                // );
                 console.log(response?.data[0]?._label);
             })
     }
+
     const checkResult = () => {
         const text = results + "";
         if (text.search("who") != -1) {
@@ -69,8 +110,40 @@ const Functionality = () => {
         //         console.log(response?.data[0]?._label);
         //     })
     }
-    const recognisionCameraBySoundVolum = () => {
 
+    const [soundVolume, setSoundVolume] = useState(0);
+    const [soundChange, setSoundChange] = useState(0);
+    // useEffect(() => {
+    //     SystemSetting.getVolume().then((volume) => {
+    //         console.log('Current volume is ' + volume);
+    //         setSoundVolume(volume)
+    //     });
+    // }, []);
+
+    // listen the volume changing if you need
+    let sound = 0;
+    volumeListener = SystemSetting.addVolumeListener((data) => {
+        const volume = data.value;
+        if (volume != sound) {
+            if (volume > sound) {
+                recognisionCameraBySoundVolum(volume, "increase");
+            } else if (volume < sound) {
+                recognisionCameraBySoundVolum(volume, "decrease");
+            }
+            sound = volume;
+        }
+
+    });
+    const recognisionCameraBySoundVolum = (volume, change) => {
+        if (change == "increase") {
+            console.log("increase");
+            Tts.speak("مرحبا انا مساعدك الشخصي كيف يمكنني المساعده");
+
+        } else if (change == "decrease") {
+            console.log("decrease");
+        }
+        // console.log(volume);
+        // console.log(change);
     }
 
     return (
